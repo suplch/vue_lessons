@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<style>
+
+</style>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="lib/vue.js"></script>
+</head>
+<body>
+
+    <!-- <h1 class="animated hinge infinite">1111111111111</h1> -->
+
+    <div id="box">
+       <ul>
+         <li v-for="data in datalist">
+            {{data.nm}}
+           <!--  <img :src="handlePath(data.img)"/> -->
+           <img :src="data.img | kerwinpath"/>
+
+           {{ data.img | kerwinpath }}
+         </li>
+       </ul>
+    </div>
+
+    <script>
+
+      //过滤器 ---- 数据格式化
+      Vue.filter("kerwinpath",function(path){
+        return path.replace('w.h','128.180')
+      })    
+
+
+      var vm = new Vue({
+        el:"#box",
+        data:{
+          isShow:true,
+          datalist:[]
+        },
+
+        mounted(){
+          axios.get("test.json").then(res=>{
+            console.log(res.data);
+            this.datalist = res.data.movieList
+          })
+        },
+
+        methods:{
+          handlePath(path){
+            console.log(path);
+            return path.replace('w.h','128.180');
+          }
+        }
+      })
+//"http://p0.meituan.net/w.h/moviemachine/f7d2ad70eb79d6d9b8a197713db9b8c41711752.jpg"
+
+// https://p0.meituan.net/128.180/moviemachine/f7d2ad70eb79d6d9b8a197713db9b8c41711752.jpg
+    </script>
+</body>
+</html>

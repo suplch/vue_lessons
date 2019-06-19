@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{10 + 10}}<hr/>
+        {{ message }} {{ message.length }} <hr/>
+        {{ message.repeat(3) }} <hr/>
+
+        <ul>
+            <li v-for="item, index in list">
+                {{ item }} {{index}}
+            </li>
+        </ul>
+
+        <ul>
+            <li v-for="item, index of list">
+                {{ item }} {{ index }}
+            </li>
+        </ul>
+        <hr/>
+        {{ link }}
+        <hr/>
+        <span v-html="link"></span><hr/>
+        成绩: {{score}} {{score < 60 ? '不及格': '及格'}}
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: '欢迎光临!',
+                link: '<a href="http://www.baidu.com">百度</a>',
+                score: 50,
+                list: [
+                    'nodejs', 'javascript', 'html', 'css'
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

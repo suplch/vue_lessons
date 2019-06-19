@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <!--
+        .site-search
+        full 的问题, (因为这个full 单词太宽泛了, 网页中可能会出现许多full类, 定义都不同, 我们无法一眼看出其作用)
+    -->
+
+    <form class="site-search full">
+        <input type="text" class="field">
+        <input type="submit" value="Search" class="button">
+    </form>
+
+    <!--
+    .blockname              生命一个组件css样式
+    .blockname--modifier    对组件css样式的修饰 微调
+    .blockname__element     组件内部元素的样式
+    -->
+    <form class="site-search site-search--full">
+        <input type="text" class="site-search__field">
+        <input type="submit" value="Search" class="site-search__button">
+    </form>
+
+</body>
+</html>

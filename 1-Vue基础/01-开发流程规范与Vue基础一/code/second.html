@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div id="app">
+        {{message}}
+        <hr/>
+        {{name}}
+    </div>
+
+<script>
+
+    var config = {
+        data: {
+            message: 'Hello world',
+            name: '张三',
+            friend: {
+                name: '李四',
+            },
+            hobbies: [
+                {title: 'JavaScript', level: 'good'},
+                {title: 'Nodejs', level: 'very good'}
+            ]
+        }
+    };
+
+
+    function wrapGetterSetter(obj) {
+        if (obj.constructor === Object) {
+            for (prop in obj) {
+                console.log(prop);
+                let innerValue = obj[prop];
+                Object.defineProperty(obj, prop, {
+                    get() {
+                        console.log('get 函数被调用, 返回值[' + innerValue + ']');
+                        return innerValue;
+                    },
+                    set(value) {
+                        console.log('set 函数被调用, 接受到外部参数为[' + value + ']');
+                        innerValue = value;
+                    }
+                });
+
+                if (typeof innerValue === 'object') {
+                    wrapGetterSetter(innerValue);
+                }
+            }
+        } else if (obj.constructor === Array) {
+            for (let item of obj) {
+                wrapGetterSetter(item);
+            }
+        }
+    }
+
+    wrapGetterSetter(config.data);
+
+    // let _value = config.data.message;
+    // Object.defineProperty(config.data, 'message', {
+    //     get() {
+    //         console.log('get 函数被调用, 返回值[' + _value + ']');
+    //         alert('get 函数被调用, 返回值[' + _value + ']');
+    //         return _value;
+    //     },
+    //     set(value) {
+    //         console.log('set 函数被调用, 接受到外部参数为[' + value + ']');
+    //         document.getElementById('app').innerText = value
+    //         _value = value;
+    //     }
+    // });
+    //
+    //
+    // console.log(config.data.message);
+    //
+    // config.data.message = '你好世界';
+
+
+</script>
+</body>
+</html>
