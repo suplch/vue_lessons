@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        select {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <table>
+        <tbody>
+            <tr>
+                <td>
+
+                    <select multiple v-model="selectTasks">
+                        <option v-for="task in tasks">{{task}}</option>
+                    </select>
+                    {{selectTasks}}
+                </td>
+                <td>
+                    <button v-on:click="moveRight">>></button>
+                    <br/>
+                    <button v-on:click="moveLeft"><<</button>
+                </td>
+                <td>
+                    <select multiple v-model="selectFinishedTasks">
+                        <option v-for="task in finishedTasks">{{task}}</option>
+                    </select>
+                    {{selectFinishedTasks}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            selectTasks: [],
+            tasks: [
+                '学习css',
+                '研究node',
+                '调研Vue',
+                '准备考试'
+            ],
+
+            selectFinishedTasks: [],
+            finishedTasks: []
+        },
+        methods: {
+            moveRight() {
+                this.finishedTasks = [...this.finishedTasks, ...this.selectTasks]
+                for (let task of this.selectTasks) {
+                    let position = this.tasks.indexOf(task);
+                    this.tasks.splice(position, 1);
+                }
+                this.selectTasks = [];
+            },
+            moveLeft() {
+                this.tasks = [...this.tasks, ...this.selectFinishedTasks];
+                for (let task of this.selectFinishedTasks) {
+                    let position = this.finishedTasks.indexOf(task);
+                    this.finishedTasks.splice(position, 1);
+                }
+                this.selectFinishedTasks = [];
+            }
+        }
+    });
+</script>
+</body>
+</html>

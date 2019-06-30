@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div  v-if="showBox" v-bind:style="{border: '1px solid green'}">
+            this is a box
+        </div>
+        <button v-on:click="switchShow">切换 显示</button>
+        <hr/>
+
+        <div v-bind:style="{display: showBox222 ? 'block': 'none' }">
+            this is box222
+        </div>
+        <button v-on:click="switchShow222">切换显示 222</button>
+        <hr/>
+
+        <div v-bind:style="{visibility: showBox333 ? 'visible' : 'hidden'}">
+            this is box333
+        </div>
+        <button v-on:click="switchShow333">切换显示 333</button>
+
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                showBox: true,
+                showBox222: true,
+                showBox333: true
+            },
+            methods: {
+                switchShow() {
+                    this.showBox = !this.showBox;
+                },
+                switchShow222() {
+                    this.showBox222 = !this.showBox222
+                },
+                switchShow333() {
+                    this.showBox333 = !this.showBox333;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

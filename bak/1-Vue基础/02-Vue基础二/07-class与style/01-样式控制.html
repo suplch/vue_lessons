@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .box {
+            color: red;
+            border: solid 1px green;
+        }
+
+        .box.fold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div v-bind:class="boxCss">
+            Welcome to 1000phone  css 类切换测试
+        </div>
+
+        <button v-on:click="switchCss">切换</button>
+        <hr/>
+
+        <div v-bind:style="boxStyle">
+            Welcome to 1000phone style 属性切换
+        </div>
+        <button v-on:click="switchStyle">切换style</button>
+        <hr/>
+        <button v-bind:style="buttonStyle" v-on:click="changeColor">显示一个随机的颜色</button>
+
+    </div>
+    <script>
+
+        new Vue({
+            el: '#app',
+            data: {
+                // v-bind:class 要求绑定一个 对象, 对象的属性名作为类名, 属性值为一个boolean 值, 如果为true 那么类名生效, 否则不生效
+                boxCss: {
+                    box: true,
+                    fold: true
+                },
+
+                // v-bind:style 要求 绑定一个对象, 对象的属性名作为 css 样式的属性名, 属性值 为 样式名称对应的 值
+                // 需要注意的是, 属性名的书写规则
+                // 比如, 原始的css 里的   font-size 需要给为  fontSize,  background-color 改为 backgroundColor
+                // 将 横杠 去掉 并且将横杆后面的首字母大写
+                boxStyle: {
+                    border: 'solid 1px blue',
+                    color: 'orange',
+                    fontSize: '24px'
+                },
+
+                buttonStyle: {
+                    color: 'rgba(127, 127, 127, 1)'
+                }
+
+            },
+            methods: {
+                switchCss() {
+                    this.boxCss.fold = !this.boxCss.fold;
+                },
+
+                switchStyle() {
+                    if (this.boxStyle.color === 'orange') {
+                        this.boxStyle.color = 'green';
+                    } else {
+                        this.boxStyle.color = 'orange';
+                    }
+
+                },
+                changeColor() {
+                    let red =  Math.floor(Math.random() * 255);
+                    let green =  Math.floor(Math.random() * 255);
+                    let blue =  Math.floor(Math.random() * 255);
+
+                    this.buttonStyle.color = `rgba(${red}, ${green}, ${blue}, 1)`;
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

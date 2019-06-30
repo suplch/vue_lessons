@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <custom-input v-model="message"></custom-input>
+        {{ message}}
+    </div>
+
+    <script>
+        Vue.component('custom-input', {
+            props: ['value'],
+            template: `
+                <div>
+                hahaha
+                <input type="text"
+                    v-bind:value="value"
+                    v-on:input="$emit('input', $event.target.value)"/>
+
+                </div>
+            `
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'hello'
+            }
+        })
+    </script>
+</body>
+</html>

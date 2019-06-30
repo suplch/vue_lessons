@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="lib/swiper/css/swiper.css" rel="stylesheet">
+    <script src="lib/swiper/js/swiper.js"></script>
+    <script src="lib/vue.js"></script>
+    <style>
+        /*.swiper-container {*/
+            /*width: 600px;*/
+            /*height: 300px;*/
+        /*}*/
+
+        .swiper-slide {
+            /*height: 300px;*/
+        }
+    </style>
+</head>
+<body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">Slide 1</div>
+            <div class="swiper-slide">Slide 2</div>
+            <div class="swiper-slide">Slide 3</div>
+        </div>
+
+        <!--<div class="swiper-pagination"></div>-->
+
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+
+        <div class="swiper-scrollbar"></div>
+    </div>
+    <script>
+        var mySwiper = new Swiper('.swiper-container', {
+            direction: 'vertical',
+            loop: true,
+
+            // pagination: {
+            //     el: '.swiper-pagination'
+            // },
+
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            scrollbar: {
+                el: '.swiper-scrollbar'
+            }
+        })
+    </script>
+</body>
+</html>

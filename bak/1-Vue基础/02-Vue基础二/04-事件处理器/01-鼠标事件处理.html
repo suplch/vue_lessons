@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <button @click="clickMe">click me111</button>
+        <input type="button" @click="clickMe($event)" value="click me222"></input>
+        <label @click="clickMe($event, 'Hello')">click me222</label>
+        <p>按钮被点击了{{count}} 次!!</p>
+        <hr/>
+        <button v-on:dblclick="dblClockMe">双击我才起作用</button>
+
+
+
+    </div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            count: 0
+        },
+        methods: {
+            clickMe(event, p1) {
+                this.count++;
+                if (p1) {
+                    alert(p1);
+                }
+
+                console.log(event.target.tagName)
+                event.target.style.border = 'solid 5px red';
+            },
+            dblClockMe(event) {
+                event.target.style.border = 'solid 5px green';
+            }
+        }
+    });
+</script>
+</body>
+</html>

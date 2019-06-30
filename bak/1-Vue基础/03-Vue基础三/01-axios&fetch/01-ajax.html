@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/axios.min.js"></script>
+    <script src="lib/vue.js"></script>
+
+    <script>
+
+
+    </script>
+</head>
+<body>
+
+    <div id="app">
+        <button v-on:click="getInfoByAjax">获取信息 by ajax</button>
+        <button v-on:click="getInfoByAxios">获取信息 by axios</button>
+        <button v-on:click="getInfoByFetch">获取信息 by fetch</button>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>电影ID</td>
+                    <td>名字</td>
+                    <td>海报</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="film in films">
+                    <td>{{film.filmId}}</td>
+                    <td>{{film.name}}</td>
+                    <td>
+                        <img :src="film.poster"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                films: []
+            },
+            methods: {
+                getInfoByAjax() {
+                    var self = this;
+                    var http = new XMLHttpRequest();
+                    http.onreadystatechange = function () {
+                        console.log(this.readyState === 4);
+                        if (this.readyState === 4) {
+                            if (this.status === 200) {
+                                var json = JSON.parse(this.responseText);
+                                self.films = json.data.films;
+                            }
+                        }
+                    };
+                    http.open('GET', './json/test.json');
+                    http.send();
+                },
+
+                getInfoByAxios() {
+                    axios.get('./json/test.json').then((result) => {
+                        this.films = result.data.data.films;
+                    })
+                },
+
+                getInfoByFetch() {
+                    fetch('./json/test.json').then((result) => {
+                        result.json().then((json) => {
+                            this.films = json.data.films;
+                        })
+                    })
+                }
+            }
+        })
+    </script>
+
+
+</body>
+</html>

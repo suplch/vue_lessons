@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{message | capitalize}}
+        <hr/>
+        {{ message | upperEven }}
+        <hr/>
+        {{ message | lowerOdd }}
+        <hr/>
+        {{ message | upperEven }}
+        <hr/>
+        [{{ message | tocode('][')}}]
+    </div>
+    <script>
+
+        Vue.filter('capitalize', function (value) {
+            if (!value) return '';
+            value = value.toString();
+            return value.charAt(0).toUpperCase() + value.slice(1)
+        });
+
+        Vue.filter('upperEven', function (value) {
+            if (!value) return '';
+            value = value.toString();
+            let buf = [];
+            for (let i = 0;i < value.length; i++) {
+                if (i % 2 === 0) {
+                    buf.push(value.charAt(i).toUpperCase())
+                } else {
+                    buf.push(value.charAt(i).toLowerCase())
+                }
+            }
+            return buf.join('');
+        });
+
+        Vue.filter('lowerOdd', function (value) {
+            if (!value) return '';
+            value = value.toString();
+            let buf = [];
+            for (let i = 0;i < value.length; i++) {
+                if (i % 2 === 0) {
+                    buf.push(value.charAt(i).toLowerCase())
+                } else {
+                    buf.push(value.charAt(i).toUpperCase())
+                }
+            }
+            return buf.join('');
+        });
+
+
+        Vue.filter('tocode', function (value, mark) {
+            if (!value) return '';
+            value = value.toString();
+            let buf = [];
+            for (let i = 0;i < value.length; i++) {
+                buf.push((value.charCodeAt(i)));
+            }
+            return buf.join(mark);
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'welcome to China'
+            }
+        })
+    </script>
+</body>
+</html>

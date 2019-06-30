@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="./lib/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-bind:value="message" v-on:input="changeValue"/>
+        <!--<input type="text" v-model="message" />-->
+        {{ message }}
+        <hr/>
+        <div style="border: solid 1px green;">
+            <input type="text" v-model="newFruit" v-on:keydown="confirmFruit" placeholder="请输入一个水果名称">
+        </div>
+
+
+        <button v-on:click="addFruit">添加水果</button>
+        <ul>
+            <li v-for="(item, index) in fruits">
+                {{ item.name }}
+                单价: <input type="number" v-model="item.price" style="width: 30px" /> 元
+                数量: <input type="number" v-model="item.number" style="width: 30px" /> 个
+                合计: {{ item.price * item.number }} 元
+                <button v-on:click="deleteFruit(item, index)">删除</button>
+            </li>
+        </ul>
+        <!--水果总价 {{ totalPrice() }}-->
+        <!--<br/>-->
+        水果总价 {{ totalValue }}
+        <hr/>
+
+    </div>
+
+    <script>
+        'use strict';
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello world',
+                newFruit: '',
+                fruits: [
+                    {name: '香蕉', price: 5, number: 2},
+                    {name: '苹果', price: 3, number: 5},
+                    {name: '橘子', price: 3, number: 6},
+                ]
+            },
+            methods: {
+                changeValue (e) {
+                    this.message = e.target.value;
+                },
+
+                confirmFruit(e) {
+                    console.log(e.keyCode);
+                    if (e.keyCode === 13) {
+                        this.addFruit();
+                    }
+                    console.log(e.target.value);
+                },
+
+                addFruit() {
+                    console.log(this.newFruit);
+                    if (this.newFruit) {
+                        this.fruits.push({
+                            name: this.newFruit,
+                            price: 1,
+                            number: 1
+                        });
+                        this.newFruit = '';
+                    } else {
+                        alert('请输入一个水果名称');
+                    }
+
+                },
+                deleteFruit(item, index) {
+                    console.log(item, index);
+
+                    this.fruits.splice(index, 1);
+                },
+                // totalPrice() {
+                //     let total = 0;
+                //     for (let fruit of this.fruits) {
+                //         total = total + (fruit.price * fruit.number);
+                //     }
+                //     return total;
+                // }
+            },
+            computed: {
+                totalValue() {
+                    let total = 0;
+                    for (let fruit of this.fruits) {
+                        total = total + (fruit.price * fruit.number);
+                    }
+                    return total;
+                }
+            },
+            watch: {
+                message: function (newValue, oldValue) {
+                    console.log(newValue, oldValue);
+                },
+                fruits: {
+                    handler: function (value) {
+                        console.log(value)
+                    },
+                    deep: true,
+                    immediate: true
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

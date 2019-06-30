@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>Scroll down the page</p>
+        <p v-pin:left="200">固定到距离等不200px的位置</p>
+        test <br/>
+        <div v-bgcolor="'orange'" style="width: 2000px; height: 1000px;"></div>
+
+    </div>
+
+    <script>
+
+        Vue.directive('pin', {
+            bind(el, binding, vnode) {
+                el.style.position = 'fixed';
+                var s = (binding.arg == 'left' ? 'left' : 'top');
+                el.style[s] = binding.value + 'px';
+            }
+        });
+
+        Vue.directive('bgcolor', function (el, binding) {
+            el.style.backgroundColor = binding.value;
+        });
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+</html>

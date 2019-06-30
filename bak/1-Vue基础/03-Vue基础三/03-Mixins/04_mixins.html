@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <script>
+        var mixin = {
+            methods: {
+                foo: function () {
+                    alert('foo')
+                },
+                conflicting: function () {
+                    alert('from mixin')
+                }
+            }
+        }
+
+        var vm = new Vue({
+            mixins: [mixin],
+            methods: {
+                bar: function () {
+                    alert('bar')
+                },
+                conflicting: function () {
+                    alert('from self')
+                }
+            }
+        })
+
+        vm.foo();
+        vm.bar();
+        vm.conflicting();
+    </script>
+</body>
+</html>

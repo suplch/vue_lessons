@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .warn {
+            color: red;
+        }
+        .good {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <p>v-for 指令遍历数组</p>
+    <ul>
+        <li v-for="(student, index) in students" v-bind:class="scoreItemClass(student)"  v-bind:key="student.id">
+            序号 {{ index + 1 }}  姓名: {{ student.name }}, 得分 {{ student.score }}
+            <button v-if="student.score < 60" v-on:click="hardStydy(student)">努力一下</button>
+        </li>
+    </ul>
+    <hr/>
+    <p>v-for 指令遍历对象</p>
+    <ul>
+        <li v-for="(value, key) in computer">
+            {{ value }}, {{key}}
+        </li>
+    </ul>
+    <hr/>
+    优秀学生
+    <ul>
+        <li v-for="student in goodStudent" v-bind:key="student.id">
+            {{student.name}}
+        </li>
+    </ul>
+
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            students: [
+                {id: '111', name: '小张', score: 100},
+                {id: '222', name: '小王', score: 90},
+                {id: '333', name: '小刘', score: 87},
+                {id: '444', name: '小李', score: 60},
+                {id: '555', name: '小亮', score: 55},
+                {id: '666', name: '小明', score: 50},
+            ],
+
+            computer: {
+                screen: '1024 * 768',
+                mouse: '小米鼠标',
+                keyboard: '101键'
+            }
+        },
+        methods: {
+            scoreItemClass(student) {
+                return {
+                    warn: student.score < 60,
+                    good: student.score >= 90
+                }
+            },
+            hardStydy(student) {
+                student.score++
+            },
+        },
+        computed: {
+            goodStudent() {
+                return this.students.filter((student) => {
+                    return student.score >= 60
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>

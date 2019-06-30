@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+
+</head>
+<body>
+<div id="app">
+    {{ total }}, {{ total }}, {{ total }}, {{ total }}
+    <hr/>
+    {{ getTotal() }}, {{ getTotal() }}, {{ getTotal() }}, {{ getTotal() }}
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            scores: [
+                100, 50, 35
+            ]
+        },
+        methods: {
+            getTotal() {
+                console.log('正在通过method统计分数');
+                return this.scores.reduce((pre, item) => {
+                    return pre + item;
+                }, 0)
+            }
+        },
+        computed: {
+            total() {
+                console.log('正在通过computed统计分数');
+                return this.scores.reduce((pre, item) => {
+                    return pre + item;
+                }, 0)
+            }
+        }
+    });
+</script>
+</body>
+</html>

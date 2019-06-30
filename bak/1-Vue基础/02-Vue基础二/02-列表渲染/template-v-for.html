@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .odd {
+            background: lightblue;
+        }
+
+        .even {
+            background: lightyellow;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <table border="1">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>名字</th>
+                <th>分数</th>
+            </tr>
+        </thead>
+        <tbody>
+            <template v-for="(student, index) in students">
+                <tr :class="{odd: index % 2 === 1, even: index % 2 === 0 }">
+                    <td>{{student.id}}</td>
+                    <td>{{student.name}}</td>
+                    <td>{{student.score}}</td>
+                </tr>
+                <tr :class="{odd: index % 2 === 1, even: index % 2 === 0 }">
+                    <td colspan="3">{{student.comment}}</td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            students: [
+                {id: '111', name: '小张', score: 100, comment: '小张是个好学生'},
+                {id: '222', name: '小王', score: 90, comment: '好好学习, 天天向上'},
+                {id: '333', name: '小刘', score: 87, comment: '好好学习, 天天向上'},
+                {id: '444', name: '小李', score: 60, comment: '好好学习, 天天向上'},
+                {id: '555', name: '小亮', score: 55, comment: '加油哦'},
+                {id: '666', name: '小明', score: 50, comment: '好好学习, 天天向上'},
+            ]
+        }
+    });
+</script>
+</body>
+</html>

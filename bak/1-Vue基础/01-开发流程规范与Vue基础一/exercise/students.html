@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ name }}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>分数</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="student in students">
+                    <td>{{student.name}}</td>
+                    <td>{{student.gender}}</td>
+                    <td>{{student.score}}</td>
+                    <td><button v-on:click="delStudent(student)">删除</button></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" align="right">最高分</td>
+                    <td colspan="2"> {{ maxScore }}</td>
+                </tr>
+            </tfoot>
+        </table>
+        <div>
+            姓名: <input ref="name" type="text">
+            性别: <input ref="gender" type="text">
+            得分: <input ref="score" type="number">
+            <button v-on:click="addStudent()"> 添加 </button>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                name: '1904班',
+                students: [
+                    {name: '小张', gender: '男', score: 80},
+                    {name: '小刘', gender: '女', score: 100},
+                    {name: '小李', gender: '男', score: 90},
+                ]
+            },
+            methods: {
+                delStudent(student) {
+                    let position = this.students.indexOf(student);
+                    this.students.splice(position, 1);
+                },
+                addStudent() {
+                    this.students.push({
+                        name: this.$refs.name.value,
+                        gender: this.$refs.gender.value,
+                        score: this.$refs.score.value
+                    });
+                    this.$refs.name.value = '';
+                    this.$refs.gender.value = '';
+                    this.$refs.score.value = '';
+                }
+            },
+            computed: {
+                maxScore() {
+                    var max = 0;
+                    for (let student of this.students) {
+                        max = student.score > max ? student.score : max;
+                    }
+                    return max;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

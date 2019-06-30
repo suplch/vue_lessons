@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <div v-on:click="clickBox" style="width: 300px; height: 300px; border: solid 5px red">
+        <button v-on:click="clickMe">click me Js stopPropagation</button>
+        <button v-on:click.stop="clickMe222">click me vue.stop</button>
+        <a href="http://www.baidu.com" v-on:click.prevent>百度</a>
+        <a href="http://www.sina.com.cn" v-on:click="gotoWebSite">新浪</a>
+    </div>
+    <hr/>
+
+    <div @click.capture="clickBox" style="width: 100px; height: 100px; border: solid 5px red;">
+        <button @click="clickMe333">
+            click me333
+        </button>
+    </div>
+    <hr/>
+
+    <div @click.self="clickBox444" style="width: 100px; height: 100px; border: solid 5px red;">
+        <button>
+            click me 444
+        </button>
+    </div>
+
+    <button @click.once="clickOne">你能点我一次</button>
+
+    <button @click.passive="clickWithPassive">点我, passive</button>
+
+    <input v-on:keyup.enter="enterMessage" type="text" />
+
+    <button @click.shift="clickShift">click me with ctrl</button>
+
+    <button @click.exact="exactClick">exact click me</button>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            count: 0
+        },
+        methods: {
+            clickMe(event) {
+                alert('Button被点击了');
+                event.stopPropagation();
+            },
+
+            clickMe222(event) {
+                alert('Button222被点击了');
+            },
+
+            clickBox(event) {
+                alert('div 被点击了')
+            },
+
+            gotoWebSite(event) {
+                alert('链接被点击了');
+                event.preventDefault();
+            },
+
+            clickBox() {
+                alert('clickBox');
+            },
+
+            clickMe333() {
+                alert('clickMe222');
+            },
+
+            clickBox444() {
+                alert('click box 444')
+            },
+
+            clickOne() {
+                alert('haha')
+            },
+
+            clickWithPassive(event) {
+                alert('passive');
+                event.preventDefault();
+            },
+
+            enterMessage(event) {
+                alert(event.target.value);
+            },
+
+            clickShift() {
+                alert('click shift')
+            },
+
+            exactClick() {
+                alert('exact click');
+            }
+        }
+    });
+</script>
+</body>
+</html>
