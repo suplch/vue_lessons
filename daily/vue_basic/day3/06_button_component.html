@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <buttonn title="hello" v-on:click="testBtnClick($event)"></buttonn>
+    <button title="hello" v-on:click="testBtnClick($event)"></button>
+</div>
+
+
+    <script>
+
+        Vue.component('buttonn', {
+            props: ['title'],
+            template: `
+                <div @click="clickMe" v-bind:title="title" style="border: 1px grey solid; background: grey">button</div>
+            `,
+            methods: {
+                clickMe(event) {
+                    this.$emit('click', event)
+                }
+            }
+        });
+
+
+        new Vue({
+            el: '#app',
+            methods: {
+                testBtnClick(event) {
+                    console.log('新组建 btn 被我们开发好了, 效果不错吧')
+                }
+            }
+        })
+
+
+
+    </script>
+
+</body>
+</html>

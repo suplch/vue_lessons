@@ -13,8 +13,8 @@ module.exports = {
         "ecmaVersion": 2018
     },
     "rules": {
-        "no-console": "off",
-        "no-func-assign": "off",
-        "no-empty": "off"
+        "no-console": "warn",
+        "no-func-assign": "error",
+        "no-empty": "warn"
     }
 };

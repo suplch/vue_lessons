@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="message" />
+        <hr/>
+
+        <label>苹果<input name="fruit" value="🍎" v-model="selectedFruits" type="checkbox"/></label>
+        <label>橙子<input name="fruit" value="🍊" v-model="selectedFruits" type="checkbox"/></label>
+        <label>西瓜<input name="fruit" value="🍉" v-model="selectedFruits" type="checkbox"/></label>
+        <hr/>
+        {{ selectedFruits }}
+        <hr/>
+        <label>
+            <input type="radio" name="gender" value="👨" v-model="gender">
+        </label>
+        <label>
+            <input type="radio" name="gender" value="👩" v-model="gender">
+        </label>
+        {{gender}}
+        <hr>
+
+        <select v-model="lesson">
+            <option disabled>请选择</option>
+            <option>js</option>
+            <option>html</option>
+            <option>css</option>
+            <option>vue</option>
+        </select>
+        {{lesson}}
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'welcom',
+                selectedFruits: ['🍊'],
+                gender: '👩',
+                lesson: 'css'
+            }
+        })
+    </script>
+</body>
+</html>

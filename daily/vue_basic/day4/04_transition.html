@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .box {
+            border: solid 1px red; width: 100px; height: 100px; position: absolute; left: 0px; background: red;
+        }
+        .move-enter-active, .move-leave-active {
+            transition: left 10s;
+        }
+        .move-enter, .move-leave-to {
+            left: 300px;
+        }
+        .move-enter-to, move-leave {
+            left: 0px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+</div>
+<script>
+    var vue = new Vue({
+        template: `
+            <button @click="showbox = !showbox">切换</button>
+            <transition name="move">
+                <div v-if="showbox" class="box">
+                    box
+                </div>
+            </transition>
+        `,
+
+        data: {
+            showbox: false
+        }
+    })
+
+    vue.$mount('#app')
+
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        select {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <select multiple v-model="leftSelectedList">
+            <option v-for="hobby of leftList">{{hobby}}</option>
+        </select>
+
+        <button @click="moveToRight">&gt;&gt;</button>
+        <button @click="moveToLeft">&lt;&lt;</button>
+        <select multiple v-model="rightSelectedList">
+            <option v-for="hobby of rightList">{{hobby}}</option>
+        </select>
+
+        <hr/>
+        左侧选择了的值{{leftSelectedList}}<br/>
+        右侧选择的值 {{ rightSelectedList }}
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                leftList: [
+                    'JavaScript',
+                    'html',
+                    'css',
+                    '王者荣耀'
+                ],
+                leftSelectedList: [],
+
+                rightList: [],
+                rightSelectedList: []
+            },
+            methods: {
+                moveToRight() {
+                    this.rightList = [...this.rightList, ...this.leftSelectedList];
+                    this.leftList = this.leftList.filter((hobby) => {
+                        return this.leftSelectedList.indexOf(hobby) === -1
+                    });
+                    this.leftSelectedList = [];
+                },
+                moveToLeft() {
+                    this.leftList = [...this.leftList, ...this.rightSelectedList]
+                    this.rightList = this.rightList.filter((hobby) => {
+                        return this.rightSelectedList.indexOf(hobby) === -1
+                    });
+
+                    this.rightSelectedList = [];
+                }
+            }
+        })
+
+
+
+        
+        function filter(items, acceptFn) {
+            let result = [];
+            for (let item of items) {
+                if (acceptFn(item)) {
+                    result.push(item);
+                }
+            }
+            return result;
+        }
+
+        Array.prototype.my_filter = function (acceptFn) {
+            let result = [];
+            for (let item of this) {
+                if (acceptFn(item)) {
+                    result.push(item);
+                }
+            }
+            return result;
+        };
+
+        var words = ['hello', 'world', 'good bye', 'student']
+
+        let newWords = words.my_filter((word) => {
+            return word.length > 5
+        });
+
+        console.log(newWords)
+        
+        
+    </script>
+</body>
+</html>

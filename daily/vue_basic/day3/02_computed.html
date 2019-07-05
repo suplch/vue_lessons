@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        firstName: <input v-model="person.firstName"> lastName: <input v-model="person.lastName">
+        <hr/>
+        {{ person.firstName + ' ' + person.lastName}}
+        <hr/>
+        计算属性:  {{ fullName }}, {{ fullName }}, {{ fullName }}
+        <hr/>
+        方法调用:  {{ fullNameM() }}, {{ fullNameM() }}, {{ fullNameM() }}
+        <button @click="setFullName">设置名字</button>
+        <hr/>
+        {{ welcome }}
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                person: {
+                    firstName: 'zhang',
+                    lastName: 'san'
+                }
+            },
+            methods: {
+                fullNameM: function () {
+                    console.log('正在计算 全名 通过方法调用')
+                    return this.person.firstName + ' ' + this.person.lastName;
+                },
+                setFullName() {
+                    this.fullName = 'li si';
+                }
+            },
+            computed: {
+                // fullName: function () {
+                //     console.log('正在计算 全名 通过计算属性')
+                //     return this.person.firstName + ' ' + this.person.lastName;
+                // },
+                fullName: { //计算属性依赖 其他 属性, 只要依赖的属性不发生变化, 就不会从新计算
+                    get() {
+                        return this.person.firstName + ' ' + this.person.lastName;
+                    },
+                    set(value) {
+                        console.log(value)
+                        let parts = value.split(' ');
+                        this.person.firstName = parts[0];
+                        this.person.lastName = parts[1];
+                    }
+                },
+                welcome: function () { // welcome 依赖于 fullName
+                    return 'Welcome ' + this.fullName
+                }
+            }
+        })
+    </script>
+</body>
+</html>

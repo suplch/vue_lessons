@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+
+        {{ message }}
+        <button @click="change">改变</button>
+
+        <button @click="change">再见</button>
+
+        {{ welcome }}
+        <hr/>
+        --{{ goodbye }}--
+    </div>
+
+    <script>
+
+        var obj1 = {
+            methods: {
+                change() {
+                    this.message = '欢迎光临';
+                }
+            },
+            computed: {
+                welcome() {
+                    return this.message + ' 张三'
+                }
+            }
+        };
+
+        var obj2 = {
+            data: {
+                name: '小赵'
+            },
+            computed: {
+                goodbye() {
+                    return '拜拜' + this.name;
+                }
+            }
+        };
+
+
+        new Vue({
+            el: '#app',
+            mixins: [obj1, obj2],
+            data: {
+                message: 'welcome',
+            },
+            methods: {
+                change() {
+                    this.message = '再见';
+                    this.name = '小刘'
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

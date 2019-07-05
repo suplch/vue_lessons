@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button v-if="showButton" >button111</button>
+        <hr/>
+        <button v-show="showButton">button222</button>
+
+
+        <button @click="showButton = !showButton">切换</button>
+        <hr/>
+
+        <ul>
+            <template v-if="false">
+                <li>li 111</li>
+                <li>li 2222</li>
+            </template>
+            <template v-else>
+                <li>li aaaa</li>
+                <li>li bbbb</li>
+            </template
+
+        </ul>
+
+
+        <ul>
+            <li v-bind:key="n" v-for="n of 10">{{n}}</li>
+        </ul>
+
+        <template v-if="true">
+            v-if
+        </template>
+
+        <ul @click="changeStudent3333">
+            <li :key="index" v-for="student, index of students">
+                {{student.name}}
+            </li>
+        </ul>
+
+
+        <!--<div style="border: solid 1px red;">-->
+
+            <!--<div v-if="false">-->
+                <!--v-if-->
+            <!--</div>-->
+            <!--<div v-else-if="false">-->
+                <!--v-else-if 111-->
+            <!--</div>-->
+            <!--<div v-else-if="true">-->
+
+            <!--</div>-->
+            <!--<div v-else-if="false">-->
+                <!--v-else-if   33-->
+            <!--</div>-->
+            <!--<div v-else>-->
+                <!--v-else-->
+            <!--</div>-->
+
+        <!--</div>-->
+
+
+
+    </div>
+
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                showButton: false,
+                students: [
+                    {id: '11111', name: 'zhang'},
+                    {id: '2222', name: 'wang'},
+                    {id: '3333', name: 'lig'},
+                    {id: '4444', name: 'aang'},
+                    {id: '5555', name: 'zhaog'}
+                ]
+            },
+            methods: {
+                changeStudent111() {
+                    this.students.push({id: '777777', name: 'zhaofsafg'})
+                },
+                changeStudent222() {
+                    let newstudents = this.students.concat([{id: '8888', name: 'dfsaf'}, {id: '99999', name: 'fdsf'}])
+                    this.students = newstudents;
+                },
+
+                changeStudent3333() {
+                    //this.students[3] = {id: '4444', name: '张张三'};
+
+                    Vue.set(this.students, 3, {id: '4444', name: '张张三'})
+                }
+            }
+        })
+    </script>
+</body>
+</html>

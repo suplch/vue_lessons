@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <table border="1">
+            <thead>
+                <tr>
+                    <td><label>全选<input v-bind:checked="isAllCheck222" @click="allCheck($event)" type="checkbox"/></label></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="student of students">
+                    <td>
+                        <input v-bind:value="student.id" v-model="selectedStudentIds" type="checkbox">
+                    </td>
+                    <td>{{student.name}}</td>
+                    <td>{{student.id}}</td>
+                </tr>
+            </tbody>
+        </table>
+        {{ selectedStudentIds }}
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                students: [
+                    {id: '111', name: '张'},
+                    {id: '222', name: '王'},
+                    {id: '333', name: '李'},
+                    {id: '444', name: '赵'}
+                ],
+                selectedStudentIds: []
+            },
+            methods: {
+                allCheck(event) {
+                    alert(event.target.checked);
+                    this.selectedStudentIds = [];
+
+                    if (event.target.checked) {
+
+                        this.students.forEach((student) => {
+                            this.selectedStudentIds.push(student.id)
+                        })
+                    }
+                },
+
+                isAllCheck() {
+                    return this.students.length === this.selectedStudentIds.length;
+                }
+            },
+            computed: {  //  定义技术属性
+                isAllCheck222() {
+                    return this.students.length === this.selectedStudentIds.length;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

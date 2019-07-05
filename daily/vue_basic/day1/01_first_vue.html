@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 双大扩号  表示一个 插值表达式 -->
+        {{ message }}
+        <hr/>
+        <input type="text" v-model="message">
+        <hr/> <!-- v-on是一个vue事件注册指令,v-on:input 表示注册一个输入事件. v-bind 是vue提供的属性绑定指令 v-bind:value 表示绑定value属性  -->
+        <input type="text" v-on:input="message = $event.target.value" v-bind:value="message">
+        <hr/>   <!-- v-on:click  表示一个vue 的click 单击事件 -->
+        <button v-on:click='change'>改变</button>
+        <button v-on:click='change($event)'>改变2222</button>  <!-- $event 表示事件对象 相当于 原生js里的 event 对象 -->
+    </div>
+    <script>   //  new 一个Vue 实例对象,
+        var vue = new Vue({
+            el: '#app',   //  告诉 vue app 元素由 vue 来接管 控制
+            data: {       //  data 属性是 告诉 vue 的数据模型
+                message: 'Welcome to Vue'    //  message 是一个用户在 data 对象 上自定义的属性, 用户也可以定义其他属性
+            },
+            methods: {  // methods 表示 vue 对象的 定义的 方法, 目的是完成一定的功能, 比如修改数据模型
+                change: function (event) {
+                    alert(this === vue);
+                    alert(event.target.tagName);
+                    this.message = '欢迎111'
+                }
+            }
+        });
+        setTimeout(function () {
+            // vue 是 调用 new Vue(...) 返回 的vue 实例对象, 表示一个vue app
+            // 通过 vue.message 可以直接 访问到内部 data 数据模型上的属性
+            vue.message = '欢迎来到武汉';
+        }, 3000)
+
+    </script>
+</body>
+</html>

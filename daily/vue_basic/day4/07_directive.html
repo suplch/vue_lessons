@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+
+
+</head>
+<body>
+<div id="app">
+
+    <div v-if="show" v-fixed:50.top.left style="border: solid 1px red; width: 200px; height: 100px;">
+        box
+
+        {{ name }}
+        <input v-model="name">
+
+    </div>
+
+    <div v-显示:abc.stop.prevent.once="show">
+        test
+    </div>
+    <button @click="show = !show">切换</button>
+
+    fasklf
+    fdsaf
+    <div style="height: 3000px; width: 3000px">f
+    fdsafsdfsa</div>
+</div>
+<script>
+    Vue.directive('fixed', {
+        bind (el, binding, vnode) {
+            el.style.position = 'fixed';
+
+            if (binding.modifiers.left) {
+                el.style.left = binding.arg + 'px';
+            }
+            if (binding.modifiers.top) {
+                el.style.top = binding.arg + 'px';
+            }
+            console.log(vnode)
+
+            console.log('bind')
+        },
+        inserted (el, binding, vnode) {
+            console.log('inserted')
+        },
+        update() {
+            console.log('update')
+        },
+        componentUpdated() {
+            console.log('component update')
+        },
+        unbind() {
+            console.log('un bind')
+        }
+    });
+
+    Vue.directive('显示', function (el, binding) {
+        console.log(el)
+        console.log(binding)
+
+        if (binding.value) {
+            el.style.display = 'block';
+        } else {
+            el.style.display = 'none';
+        }
+    });
+
+
+    new Vue({
+        el: '#app',
+        data: {
+            name: 'zhang',
+            show: false
+        }
+    });
+
+
+</script>
+</body>
+</html>

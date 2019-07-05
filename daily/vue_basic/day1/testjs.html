@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <script>
+        
+        var data = {
+            size: 10,
+            child: {
+                size: 20,
+                child: {
+                    size: 30
+                }
+            },
+            children: [
+                {name: 'zhang', size: 10},
+                {name: 'wang', size: 20},
+            ]
+        };
+        function sum(obj, propname) {
+            let total = 0;
+            if (obj.constructor === Array) {
+                for (let itemObj of obj) {
+                    total += sum(itemObj, propname)
+                }
+            } else if (obj.constructor === Object) {
+                for (let prop in obj) {
+                    if (obj[prop] !== undefined) {
+                        if (prop === propname) {
+                            total += obj[prop];
+                            continue;
+                        }
+                        total += sum(obj[prop], propname)
+                    }
+                }
+            }
+            return total;
+        }
+        console.log(sum(data, 'size'))
+
+    </script>
+
+</body>
+</html>

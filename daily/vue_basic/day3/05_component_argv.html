@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <script src="js/component/component_arguments.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <login ref="lg"
+               v-bind:title="loginTitle"
+               namelabel="Username"
+               passlabel="Password"
+               loginlabel="Login"
+
+               @login="handleLogin($event)"></login>
+
+        <button @click="testLoginObject($event)">测试login对象</button>
+    </div>
+
+    <script>
+
+        new Vue({
+            el: '#app',
+            data: {
+                loginTitle: '登录框',
+            },
+            methods: {
+                handleLogin(event) {
+                    console.log(event.username);
+                    console.log(event.password);
+                },
+                testLoginObject(event) {
+                    // this.$refs.lg 可以返回组件实例对象, 我们可以直接调用 组件上的方法
+
+                    this.$refs.lg.$on('login', function (event) {
+                        console.log('通过js代码的方式 监听 login 事件', event);
+                    });
+                    this.$refs.lg.login()
+                }
+            }
+        })
+    </script>
+</body>
+</html>

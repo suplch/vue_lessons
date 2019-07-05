@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <table border="1" v-if="students && students.length > 0">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>得分</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="student, index in students">
+                    <template v-if="student === editing">
+                        <td><input ref="s_name" v-bind:value="student.name" /></td>
+                        <td><input ref="s_gender" v-bind:value="student.gender" /></td>
+                        <td><input ref="s_score" type="number" v-bind:value="student.score" /></td>
+                    </template>
+                    <template v-else>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.gender }}</td>
+                        <td>{{ student.score }}</td>
+                    </template>
+                    <td>  <!-- v-on:click vue的点击事件  可以将本作用域中的数据传递给 调用方法 -->
+                        <button v-on:click="removeStudent(student, index)">删除</button>
+                        <button v-if="editing !== student"  v-on:click="editStudent(student)">
+                            编辑
+                        </button>
+                        <button v-if="editing === student" v-on:click="confirmStudent(student)">
+                            确认
+                        </button>
+                        <button v-if="student === editing" v-on:click="editing = undefined">
+                            取消
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2">合计</td>
+                    <td colspan="2">{{ totalComputed }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">最大分</td>
+                    <td colspan="2">{{ maxScore }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">最小分</td>
+                    <td colspan="2">{{ minScore }}</td>
+                </tr>
+            </tfoot>
+        </table>
+        <div v-else>
+            暂无学生数据...
+        </div>
+        <hr/>
+        <div>         <!-- 访问 通过 ref 属性 告诉vue 如何 访问 本元素对象 -->
+            姓名: <input ref="name" type="text" />
+            性别: <input ref="gender" type="text" />
+            得分: <input ref="score" type="number" />
+            <button v-on:click="addStudent">添加</button>
+        </div>
+    </div>
+    <script>
+        //
+        var app = new Vue({
+            el: '#app',
+            data: {  // data 表示vue 的属性
+                editing: undefined,
+                students: [
+                    {name: '小张', gender: '男', score: 100},
+                    {name: '小李', gender: '女', score: 200},
+                    {name: '小赵', gender: '男', score: 100},
+                ]
+            },
+            methods: {  // methods 声明 vue 可用的方法
+                removeStudent(student, index) {
+                    // console.log(student);
+                    // console.log(index);
+                    // this.students.splice(index, 1)
+                    let position = this.students.indexOf(student);
+                    this.students.splice(position, 1)
+                },
+                addStudent() {
+                    console.log(this.$refs.name);
+                    this.students.push({   // 向数组中添加一个对象, 将导致 vue 从新渲染界面
+                        name: this.$refs.name.value, // 获取 name 的input框的值
+                        gender: this.$refs.gender.value, // 获取 gender 的input框的值
+                        score: this.$refs.score.value // 获取 score 的input框的值
+                    });
+
+                    // 通过 this.$refs 可以访问 到具体的元素对象
+                    // this.$refs.name 访问 input 元素对象
+                    this.$refs.name.value = '';  // 清除 文本框内容
+                    this.$refs.gender.value = '';
+                    this.$refs.score.value = '';
+                },
+                editStudent(student) {
+                    this.editing = student
+                },
+
+                confirmStudent(student) {
+                    student.name = this.$refs.s_name[0].value;
+                    student.gender = this.$refs.s_gender[0].value;
+                    student.score = this.$refs.s_score[0].value;
+                    this.editing = undefined;
+                },
+
+                totalMethod() {
+                    let total = 0;
+                    for (let student of this.students) {
+                        total += parseFloat(student.score);
+                    }
+                    return total;
+                }
+
+            },
+            computed: {
+                totalComputed () {
+                    let total = 0;
+                    for (let student of this.students) {
+                        total += parseFloat(student.score);
+                    }
+                    return total;
+                },
+                maxScore() {
+                    let max = 0;
+                    for (let student of this.students) {
+                        max = max < student.score? student.score : max;
+                    }
+                    return max;
+                },
+                minScore() {
+                    let min = 0;
+
+                    if (this.students && this.students.length > 0) {
+                        min = this.students[0].score
+                    }
+
+                    for (let student of this.students) {
+                        min = min > student.score ? student.score : min;
+                    }
+                    return min;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

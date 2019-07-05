@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <!-- 引入组件定义的js代码 -->
+    <script src="js/component/login_component.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        {{message}}
+        <!-- login 是 vue 自定义的标签 -->
+        <login></login>
+
+    </div>
+
+    <script>
+
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'welcome'
+            }
+        });
+        
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .boxborder {
+            border: solid 5px red;
+        }
+
+        .size {
+            width: 100px; height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div style="border: solid 5px red; width: 100px; height: 100px;">
+            box1
+        </div>
+
+        <div @click="changeBox2" :style="[{border: 'solid 5px red'}, {width: '100px'}, {height: '100px'}]">
+            box2
+        </div>
+        <hr/>
+        <div class="boxborder size">
+            box3
+        </div>
+
+        <div @click="changeBox4" :class="boxClassArr">
+            box4
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                boxStyle: {
+                    border: 'solid 5px red',
+                    width: '100px',
+                    height: '100px'
+                },
+
+                boxClass: {
+                    boxborder: true,
+                    size: true
+                },
+                boxClassArr: ['boxborder']
+            },
+            methods: {
+                changeBox2() {
+
+                    let red = Math.floor(Math.random() * 256);
+                    let green = Math.floor(Math.random() * 256);
+                    let blue = Math.floor(Math.random() * 256);
+
+                    this.boxStyle.border = `solid 5px rgba(${red}, ${green}, ${blue}, .5)`;
+                },
+
+                changeBox4() {
+                    this.boxClassArr.push('size')
+                }
+            }
+        })
+    </script>
+</body>
+</html>

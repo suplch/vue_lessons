@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body onclick="alert('body')">
+    <div id="app">
+        <button @click.stop="clickMe()">
+            button
+        </button>
+
+        <a @click.prevent="clickLink" href="http://www.baidu.com">百度</a>
+
+        <div @click.self="clickBox" style="border: solid 1px red; width: 200px; height: 200px">
+            <button @click.capture="clickCapture" @click.once="clickPropagation"> capture </button>
+        </div>
+
+        <input @keydown.alt.enter="inputKeyUp" type="text"/>
+
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            methods: {
+                inputKeyUp(event) {
+                    console.log(event)
+
+                    alert(event.key);
+                },
+                clickMe(event) {
+                    console.log(event)
+                    alert('click button')
+                },
+                clickLink (event) {
+
+                },
+
+                clickCapture(e) {
+
+                    alert('capture')
+                },
+
+                clickPropagation () {
+                    alert('propagation')
+                },
+
+                clickBox() {
+                    alert('click box')
+                }
+            }
+        })
+    </script>
+</body>
+</html>

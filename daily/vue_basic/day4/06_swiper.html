@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.css">
+    <script src="lib/vue.js"></script>
+    <!-- 引入 swiper 库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.js"></script>
+    <script src="components/swiper.js"></script>
+    <style>
+        .swiper-container {
+            width: 600px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <swiper1 :slots="names">
+            <!-- 循环嵌入 插槽内容                v-slot 指明使用哪一个插槽   -->
+            <template v-for="student in students" v-slot:[student.name]>
+                {{ student.detail }}
+            </template>
+        </swiper1>
+    </div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            students: [
+                {name: 'zhang', detail: '好学生'},
+                {name: 'wang', detail: '爱玩'},
+                {name: 'li', detail: '比较闹'},
+                {name: 'zhao', detail: 'fsaf'},
+                {name: 'liu', detail: '比较闹'},
+                {name: 'zhu', detail: 'fasfsf'},
+            ]
+        },
+        computed: {
+            names: function () {
+                let namelist = [];
+                for (student of this.students) {
+                    namelist.push(student.name)
+                }
+                return namelist;
+            }
+        }
+    });
+
+
+</script>
+</body>
+</html>
