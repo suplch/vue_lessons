@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <base-layout>
+            this is conent
+            <template v-slot:footer>
+                this is footer
+            </template>
+        </base-layout>
+    </div>
+    <script>
+        Vue.component('base-layout', {
+            template: `
+                <div>
+                    <header></header>
+                    <section>
+                        <slot></slot>
+                    </section>
+                    <footer>
+                        <slot name="footer"></slot>
+                    </footer>
+                </div>
+            `
+        });
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+</html>

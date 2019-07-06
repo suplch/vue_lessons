@@ -51,8 +51,6 @@ export default {
         if (result.data.status === 10000) {
           this.students = result.data.data.students;
         }
-
-
       });
     }
   }

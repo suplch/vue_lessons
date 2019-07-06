@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/vue-router.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Hello App!</h1>
+        <p>
+            <router-link to="/foo/123?name=zhang">Go to Foo</router-link>
+            <router-link to="/bar/abc?age=123">Go to Bar</router-link>
+            <router-link to="/abc/def">abc def</router-link>
+
+        </p>
+
+        <router-view></router-view>
+    </div>
+
+    <script>
+        const Foo = {
+            template: `<div>foo name: {{name}},  id: {{ id }} <button @click="goBack">go back</button></div>`,
+            computed: {
+                name() {
+                    return this.$route.query.name
+                },
+                id() {
+                    return this.$route.params.id
+                }
+            },
+            methods: {
+                goBack() {
+                    history.length > 1 ?this.$router.go(-1) : this.$router.push('/')
+
+                }
+            },
+            beforeRouteEnter(to, from, next) {
+                console.log('进入foo 前')
+                next();
+            },
+            beforeRouteUpdate(to, from, next) {
+                console.log('foo 参数变化');
+                next();
+            },
+            beforeRouteLeave(to, from, next) {
+                console.log('离开foo 前')
+                next();
+            }
+        };
+        const Bar = {
+            template: `
+                <div>
+                bar code: {{ code }}, age: {{ age }}
+                    <router-view></router-view>
+                    <router-view name="child2"></router-view>
+                </div>`,
+            computed: {
+                code() {
+                    return this.$route.params.code;
+                },
+                age() {
+                    return this.$route.query.age;
+                }
+            }
+        };
+
+        const BarChild = {
+            template: '<div>这是路由子组件</div>'
+        };
+
+        const BarChild2 = {
+            template: `<div>这是另一个兄弟子路由组件</div>`
+        }
+
+        const AbcDef = {
+            template: `<div>abc def</div>`,
+            computed: {
+                code() {
+                    return this.$route.params.code;
+                },
+                age() {
+                    return this.$route.query.age;
+                }
+            }
+        };
+
+        const routes = [
+            {path: '/foo/:id', component: Foo},
+            {
+                path: '/bar/:code',
+                component: Bar,
+                meta: { other: '其他一些bar属性'},
+                children: [
+                    {
+                        path: 'child', components: {
+                            default: BarChild,
+                            child2: BarChild2
+                        }
+                    }
+                ]
+            },
+            {
+                path: '/abc/def',
+                component: AbcDef,
+                beforeEnter(to, from, next) {
+                    console.log('/abc/def 独享守卫');
+                    next();
+                },
+                meta: { other: '其他一些属性'}
+            }
+        ];
+
+        const router = new VueRouter({
+            routes: routes
+        });
+
+        router.beforeEach((to, from, next) => {
+            console.log('to', to);
+            console.log('from', from);
+
+            next();
+        });
+
+        router.afterEach((to, from) => {
+            console.log('后置 钩子', to, from)
+        });
+
+
+
+        new Vue({
+            router: router,
+            updated: function () {
+                console.log(this.$route);
+                alert(this.$route.query.name + ', ' + this.$route.params.id)
+                alert(this.$route.query.age + ', ' + this.$route.params.code)
+            }
+        }).$mount('#app')
+
+
+    </script>
+</body>
+</html>

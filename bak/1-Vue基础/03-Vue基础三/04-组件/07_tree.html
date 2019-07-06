@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        ul {
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <tree-node v-bind:node="root"></tree-node>
+    </div>
+    <script>
+
+        Vue.component('tree-node', {
+            props: ['node'],
+            template: `
+                <div>
+                    <button>+</button>{{ node.name }}
+                    <ul>
+                        <li v-for="child in node.children">
+                            <tree-node v-bind:node="child"></tree-node>
+                        </li>
+                    </ul>
+                </div>
+            `
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                root: {
+                    name: '中国',
+                    children: [{
+                        name: '湖北',
+                        children: [{
+                            name: '武汉'
+                        }, {
+                            name: '黄石'
+                        }]
+                    }, {
+                        name: '湖南',
+                        children: [{
+                            name: '长沙'
+                        }, {
+                            name: '岳阳'
+                        }]
+                    }, {
+                        name: '北京'
+                    }]
+                }
+            }
+        })
+    </script>
+</body>
+</html>

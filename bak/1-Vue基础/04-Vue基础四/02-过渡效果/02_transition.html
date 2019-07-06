@@ -4,38 +4,40 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+        .box {
+            position: absolute; width: 100px; height: 100px; border: solid 1px red;left: 0px;
+        }
         .fade-enter-active, .fade-leave-active {
-            transition: opacity 2s;
+            transition: left 0.5s;
         }
         .fade-enter, .fade-leave-to {
-            opacity: 0;
+            left: 300px;
+        }
+        .fade-enter-to, .fade-leave {
+            left: 0px;
         }
     </style>
     <script src="lib/vue.js"></script>
 </head>
 <body>
     <div id="app">
-        <transition name="fade">
-            <ul>
-                <li v-for="(word, index) of words">{{word}} <button @click="removeWord(word)">删除</button></li>
-            </ul>
+        <button @click="show = !show">toggle</button>
+        <transition name="fade" v-on:after-enter="afterEnter()">
+            <div ref="box" v-if="show" class="box">
+                box
+            </div>
         </transition>
     </div>
     <script>
         new Vue({
             el: '#app',
             data: {
-                words: [
-                    'hello',
-                    'world',
-                    'good',
-                    'bye'
-                ]
+                show: false
             },
             methods: {
-                removeWord(word) {
-                    var position = this.words.indexOf(word);
-                    this.words.splice(position, 1);
+                afterEnter() {
+                    alert('hello');
+
                 }
             }
         })
