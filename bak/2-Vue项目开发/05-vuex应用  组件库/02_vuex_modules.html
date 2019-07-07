@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <script src="lib/vuex.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script>
+
+        Vue.use(Vuex);
+
+        const moduleA = {
+            state: {
+                countA: 0
+            },
+            mutations: {
+                increment(state) {
+                    console.log('moduleA模块的 mutation increment 被调用');
+                    state.countA++;
+                }
+            },
+            getters: {
+                doubleCountA(state) {
+                    return state.countA * 2;
+                }
+            },
+            actions: {
+                increment({ commit }) {
+                    console.log('moduleA模块 action increment 被调用');
+                    commit('increment');
+                }
+            }
+        };
+
+        const moduleB = {
+            state: {
+                countB: 0
+            },
+            mutations: {
+                increment(state) {
+                    console.log('moduleB模块的 mutation increment 被调用');
+                    state.countB++;
+                }
+            },
+            getters: {
+                doubleCountB(state) {
+                    return state.countB * 2;
+                }
+            },
+            actions: {
+                increment({ commit }) {
+                    console.log('moduleB模块 action increment 被调用');
+                    commit('increment');
+                }
+            }
+        };
+
+        const store = new Vuex.Store({
+            state: {
+                count: 0,
+            },
+            mutations: {
+                increment(state) {
+                    console.log('根模块的 mutation increment 被调用');
+                    state.count++;
+                }
+            },
+            getters: {
+                doubleCount(state) {
+                    return state.count * 2;
+                }
+            },
+            actions: {
+                increment({ commit }) {
+                    console.log('根模块的 action increment 被调用');
+                    commit('increment');
+                }
+            },
+            modules: {
+                a: moduleA,
+                b: moduleB
+            }
+        });
+
+        console.log(store.state.count, store.state.a.countA, store.state.b.countB);
+        store.dispatch('increment')
+        console.log(store.state.count, store.state.a.countA, store.state.b.countB);
+        console.log(store.getters.doubleCount, store.getters.doubleCountA, store.getters.doubleCountB);
+
+        // new Vue({
+        //     el: '#app',
+        //     store,
+        // })
+    </script>
+</body>
+</html>

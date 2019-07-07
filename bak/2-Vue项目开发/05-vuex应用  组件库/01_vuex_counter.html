@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <script src="lib/vuex.js"></script>
+</head>
+<body>
+    <div id="app">
+        count: {{ count }}
+        <hr/>
+        countAlias : {{ countAlias }}
+        <hr/>
+        countPlusLocalState: {{ countPlusLocalState }}
+        <hr/>
+        localComputed {{ localComputed }}
+        <hr/>
+        CountMultiple2 {{ CountMultiple2 }}  CountMultiple2 {{ CountMultiple3 }}
+        <hr/>
+        doubleCount: {{ doubleCount }}  tribleCount {{ tribleCount }}
+        <hr/>
+        四倍 {{ fourfoldCount }} 五倍 {{ quintupling }}
+        <button @click="increment">+</button>
+        <button @click="decrement">-</button>
+        <button @click="add"> add </button>
+
+        <button @click="incrementByAction">incrementByAction</button>
+        <button @click="decrementByAction">decrementByAction</button>
+
+        <button @click="incrementByActionAsync">incrementByAction Async</button>
+        <button @click="incrementAsyncWithPayload"> incrementAsyncWithPayload </button>
+
+        <button @click="incrementX(5)"> + 5</button>
+        <button @click="decrementX(5)"> - 5</button>
+    </div>
+
+    <script>
+        Vue.use(Vuex);
+
+        const store = new Vuex.Store({
+            state: {
+                count: 0
+            },
+            getters: {
+                doubleCount(state) {
+                    return state.count * 2;
+                },
+                tribleCount(state, getters) {
+                    return getters.doubleCount / 2 * 3;
+                },
+                multipleX(state) {
+                    return function (x) {
+                        return state.count * x;
+                    }
+                }
+            },
+            mutations: {
+                increment(state) {
+                    state.count++;
+                },
+                decrement(state) {
+                    state.count--;
+                },
+                incrementX(state, n) {
+                    state.count += n;
+                },
+                decrementX(state, payload) {
+                    state.count -= payload.n;
+                }
+            },
+            actions: {
+                increment({commit, state, getters}) {
+                    commit('increment');
+                },
+                decrement({commit, state, getters}) {
+                    commit('decrement');
+                },
+                incrementAsync({commit}) {
+                    setTimeout(() => {
+                        commit('increment')
+                    }, 1000);
+                },
+                incrementAsyncWithPayload({commit}, payload) {
+                    setTimeout(() => {
+                        commit('incrementX', payload.n);
+                    }, 1000)
+                }
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            store,
+            data: {
+                localCount: 1000
+            },
+            methods: {
+                increment() {
+                    this.$store.commit('increment');
+                },
+                decrement() {
+                    this.$store.commit('decrement');
+                },
+                incrementByAction() {
+                    this.$store.dispatch('increment')
+                },
+                decrementByAction() {
+                    this.$store.dispatch('decrement');
+                },
+                incrementByActionAsync() {
+                    this.$store.dispatch('incrementAsync')
+                },
+                incrementAsyncWithPayload () {
+                    this.$store.dispatch('incrementAsyncWithPayload', {n: 5})
+                },
+                incrementX(n) {
+                    this.$store.commit('incrementX', n);
+                },
+                decrementX(n) {
+                    this.$store.commit({
+                        type: 'decrementX',
+                        n: n
+                    })
+                },
+                ...Vuex.mapMutations({
+                    add: 'increment'
+                })
+            },
+            computed: {
+                localComputed() {
+                    return this.$store.state.count + 50;
+                },
+                CountMultiple2() {
+                    return this.$store.getters.doubleCount;
+                },
+                CountMultiple3() {
+                    return this.$store.getters.tribleCount;
+                },
+
+                ...Vuex.mapGetters([
+                    'doubleCount',
+                    'tribleCount'
+                ]),
+                fourfoldCount() {
+                    return this.$store.getters.multipleX(4);
+                },
+
+                quintupling() {
+                    return this.$store.getters.multipleX(5);
+                },
+
+                ...Vuex.mapState({
+                    count: (state) => {
+                        return state.count;
+                    },
+                    countAlias: 'count',
+                    countPlusLocalState(state) {
+                        return state.count + this.localCount;
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+</html>
