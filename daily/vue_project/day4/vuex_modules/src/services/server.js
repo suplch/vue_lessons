@@ -1,9 +1,14 @@
 
 function createIdGen() {
+
     let id = 1001;
-    return function () {
+
+    let fn = function () {
         return id++;
-    }
+    };
+
+    return fn;
+
 }
 
 const idGen = createIdGen();

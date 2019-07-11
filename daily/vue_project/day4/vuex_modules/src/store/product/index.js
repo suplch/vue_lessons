@@ -1,10 +1,13 @@
-
 import server from '../../services/server';
-
 const ProductModule = {
-    namespaced: true,
+    namespaced: true,  // 开启模块命名空间
     state: {
         products: []
+    },
+    getters: {
+        countAdd100(state, getters, rootState, rootGetters) {
+            return rootState.count + 100 + rootGetters.doubleCount;
+        }
     },
     mutations: {
         addProduct(state, product) {
@@ -22,7 +25,6 @@ const ProductModule = {
     },
     actions: {
         addProduct({ commit }, payload) {
-
             server.addProduct(payload.product, function (result) {
                 commit('addProduct', result.product)
             });
@@ -30,10 +32,17 @@ const ProductModule = {
         },
         delProduct({commit}, payload) {
             commit('delProduct', payload.productId)
+        },
+        testAction({ commit, dispatch }) {
+            console.log('test action ');
+            dispatch('addCount', null, { root: true })
+        },
+        globalAction: {
+            root: true,
+            handler({commit}) {
+                console.log('global action');
+            }
         }
     }
-
 };
-
-
 export default ProductModule

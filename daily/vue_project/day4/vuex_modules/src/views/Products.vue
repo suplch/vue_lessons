@@ -29,29 +29,46 @@
             单价 <input ref="product_price" type="number"> <br/>
             <button @click="addProduct"> 提交 </button>
         </div>
+        <hr/>
+        <button @click="testAction">test action </button>
+        <button @click="globalAction">globalAction</button>
+        <hr/>
+        {{ count }}
+        <button @click="addCount">+</button>
     </div>
 </template>
 
 <script>
+    import { mapState, mapActions } from 'vuex';
     export default {
         name: "products",
         computed: {
-            products() {
-                return this.$store.state.product.products;
+            // products() { // this.$store.state 通过模块 名 product 访问到 子模块 state 数据
+            //     return this.$store.state.product.products;
+            // },
+            ...mapState('product', {
+                products(state) {
+                    return state.products;
+                }
+            }),
+            count() {
+                return this.$store.state.count;
             }
         },
         methods: {
+            addCount() {
+                this.$store.dispatch('addCount');
+            },
             addProduct() {
                 let name = this.$refs.product_name.value;
                 let count = Number(this.$refs.product_count.value);
                 let price = Number(this.$refs.product_price.value);
-
                 let product = {
                     name,
                     count,
                     price
                 };
-
+                // 开启模块命名空间后 需要加路径 去访问 action
                 this.$store.dispatch('product/addProduct', {
                     product
                 });
@@ -59,14 +76,18 @@
                 this.$refs.product_name.value = '';
                 this.$refs.product_count.value = '';
                 this.$refs.product_price.value = '';
-
-
             },
-            delProduct(product) {
+            delProduct(product) {  // 开启模块命名空间后 需要加路径 去访问 action
                 this.$store.dispatch('product/delProduct', {
                     productId: product.id
                 })
-            }
+            },
+            ...mapActions('product',{
+                testAction: 'testAction', // this.testAction   =>    this.$store.dispatch('product/testAction');
+            }),
+            ...mapActions({
+                globalAction: 'globalAction'
+            })
         }
     }
 </script>
