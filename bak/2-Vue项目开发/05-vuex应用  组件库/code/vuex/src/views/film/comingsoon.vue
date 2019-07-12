@@ -1,7 +1,7 @@
 <template>
 	<div>
 			<ul>
-				<li v-for="data in $store.state.comingsoonlist" @click="handleChangePage(data.filmId)" :key="data.filmId">
+				<li v-for="data in comingsoonlist" @click="handleChangePage(data.filmId)" :key="data.filmId">
 					<img :src="data.poster"/>
 					<h3>{{data.name}}</h3>
 				</li>
@@ -48,6 +48,12 @@
 				// this.$router.push(`/detail?id=${id}`)
 			}
 		},
+
+    computed: {
+      comingsoonlist() {
+        return this.$store.state.comingsoonlist
+      }
+    },
 
 		destroyed(){
 		}
