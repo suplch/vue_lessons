@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("\nif (!String.prototype.trim) {\n    String.prototype.trim = function () {\n        return this.replace(/^\\s+|\\s+$/g, '')\n    };\n\n}\n\n\n\n//# sourceURL=webpack:///./src/polyfill.js?");
+eval("if (!String.prototype.trim) {\n    String.prototype.trim = function () {\n        return this.replace(/^\\s+|\\s+$/g, '')\n    };\n}\n\n\n\n//# sourceURL=webpack:///./src/polyfill.js?");
 
 /***/ })
 

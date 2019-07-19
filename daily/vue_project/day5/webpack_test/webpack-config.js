@@ -28,6 +28,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),  // 构建前 清理 目录
         new HtmlWebpackPlugin({    // 指明 html 模板
+            title: '大家好',
             path: './dist',
             template: './src/index.template.html'
         })

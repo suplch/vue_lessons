@@ -160,7 +160,7 @@ eval("module.exports = __webpack_require__.p + \"923d5a064a83f1e330a481f779ad017
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("\nconst { add } = __webpack_require__(/*! ./utils/caculator */ \"./src/utils/caculator.js\");\nconst { createList } = __webpack_require__(/*! ./components/list */ \"./src/components/list.js\");\n\n__webpack_require__(/*! ./style */ \"./src/style.css\");\n\nconst logo = __webpack_require__(/*! ./imgs/logo */ \"./src/imgs/logo.png\");\n\nconsole.log('hello world');\n\nlet result = add(2, 3);\n\nconsole.log(result);\n\nlet ul = createList(5);\n\ndocument.body.appendChild(ul);\n\nlet img = document.createElement('img');\nimg.src = logo;\ndocument.body.appendChild(img);\n\n\n//# sourceURL=webpack:///./src/main.js?");
+eval("\nconst { add } = __webpack_require__(/*! ./utils/caculator */ \"./src/utils/caculator.js\");\nconst { createList } = __webpack_require__(/*! ./components/list */ \"./src/components/list.js\");\n__webpack_require__(/*! ./style */ \"./src/style.css\");\nconst logo = __webpack_require__(/*! ./imgs/logo */ \"./src/imgs/logo.png\");\nconsole.log('hello world');\n\nlet result = add(2, 3);\nconsole.log(result);\nlet ul = createList(5);\ndocument.body.appendChild(ul);\n\nlet img = document.createElement('img');\nimg.src = logo;\ndocument.body.appendChild(img);\n\n\n//# sourceURL=webpack:///./src/main.js?");
 
 /***/ }),
 
