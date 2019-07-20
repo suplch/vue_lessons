@@ -5,6 +5,11 @@ import VueRouter from 'vue-router';
 
 import SingerList from './views/SingerList';
 import SongList from './views/SongList';
+import LifeCycle from './views/LifeCycle';
+import WaitPay from './views/WaitPay';
+
+import Login from './views/Login';
+import Register from './views/Register';
 
 Vue.use(VueRouter);
 
@@ -19,6 +24,21 @@ const router = new VueRouter({
     {
       path: '/songs/:singer_id',
       component: SongList
+    },
+    {
+      path: '/life',
+      component: LifeCycle
+    },
+    {
+      path: '/pay',
+      component: WaitPay
+    },
+    {
+      path: '/login',
+      component: Login
+    },{
+      path: '/register',
+      component: Register
     }
   ]
 });

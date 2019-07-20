@@ -1,5 +1,9 @@
 <template>
     <div>
+        <a href="#/life"> Life</a>
+        <a href="#/pay"> pay</a>
+        <a href="#/login">登录/注册</a>
+
         <ul>
             <li v-for="singer of singers" @click="gotoDetail(singer)">
                 <div class="desc">
